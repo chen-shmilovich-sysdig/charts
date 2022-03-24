@@ -200,3 +200,23 @@ to help the maxUnavailable and max_parallel_cold_starts pick a reasonable value 
     {{- 1 -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Determine collector endpoint based on provided region
+*/}}
+{{- define "agent.collectorEndpoint" -}}
+    {{- if (eq .Values.global.sysdig.region "us1") -}}
+        {{- "collector.sysdigcloud.com" -}}
+    {{- else if (eq .Values.global.sysdig.region "us2") -}}
+        {{- "ingest-us2.app.sysdig.com" -}}
+    {{- else if (eq .Values.global.sysdig.region "us3") -}}
+        {{- "ingest.us3.app.sysdig.com" -}}
+    {{- else if (eq .Values.global.sysdig.region "us4") -}}
+        {{- "ingest.us4.app.sysdig.com" -}}
+    {{- else if (eq .Values.global.sysdig.region "eu1") -}}
+        {{- "ingest-eu1.app.sysdig.com" -}}
+    {{- else if (eq .Values.global.sysdig.region "au1") -}}
+        {{- "ingest.au1.app.sysdig.com" -}}
+    {{- end -}}
+{{- end -}}
+
