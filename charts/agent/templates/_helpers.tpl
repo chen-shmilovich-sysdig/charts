@@ -192,3 +192,10 @@ Check for all COS nodes or a flag to enable eBPF.
 {{- define "agent.ebpfEnabled" -}}
   {{- or (include "agent.isAllCos" .) .Values.ebpf.enabled -}}
 {{- end -}}
+
+{{/*
+Returns the namespace for installing components
+*/}}
+{{- define "agent.namespace" -}}
+    {{- coalesce .Values.namespace .Values.global.clusterConfig.namespace .Release.Namespace -}}
+{{- end -}}
