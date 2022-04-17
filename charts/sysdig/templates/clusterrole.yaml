@@ -10,6 +10,7 @@ rules:
       - ""
     resources:
       - pods
+      - pods/log
       - replicationcontrollers
       - services
       - endpoints
@@ -22,6 +23,8 @@ rules:
       - resourcequotas
       - persistentvolumes
       - persistentvolumeclaims
+      - configmaps
+      - controllerrevisions
     verbs:
       - get
       - list
@@ -68,6 +71,7 @@ rules:
       - daemonsets
       - deployments
       - ingresses
+      - ingressclasses
       - replicasets
     verbs:
       - get
@@ -91,6 +95,7 @@ rules:
     - storage.k8s.io
     resources:
     - storageclasses
+    - volumeattachments
     verbs:
     - get
     - list
@@ -104,5 +109,19 @@ rules:
       - "{{ template "sysdig.fullname" . }}"
     verbs:
       - "use"
+{{- end }}
+{{- if .Values.cspmCollector.deploy  }}
+  - apiGroups:
+      - "rbac.authorization.k8s.io"
+    resources:
+      - "clusterroles"
+      - "clusterrolebindings"
+      - "roles"
+      - "rolebindings"
+      - "serviceaccounts"
+    verbs:
+      - "get"
+      - "list"
+      - "watch"
 {{- end }}
 {{- end }}
